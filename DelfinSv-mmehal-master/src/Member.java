@@ -4,10 +4,10 @@ import java.time.LocalDate;
 public class Member {
 
     public int memberId;
-    private Gender gender;
+    private final Gender gender;
     private String firstName;
     private String lastName;
-    private String cpr;
+    private final String cpr;
     private char competitionSwimmer;
     public boolean active;
 
@@ -57,8 +57,9 @@ public class Member {
         return competitionSwimmer;
     }
 
+
     @Override
     public String toString() {
-        return lastName + ", " + firstName + ". Medlems Nr: " + memberId;
+        return lastName + ", " + firstName + ". Medlems Nr: " + memberId + ", " + (competitionSwimmer == 'K' ? "Konkurrence Svømmer" : "Fritids Svømmer");
     }
 }

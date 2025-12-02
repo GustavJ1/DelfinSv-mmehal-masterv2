@@ -9,7 +9,7 @@ public class Membership {
     public Membership() {
 
     }
-
+    
     public double getPrice() {
         double price = 500;
         if (member.active) {

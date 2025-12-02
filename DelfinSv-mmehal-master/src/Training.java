@@ -50,10 +50,64 @@ public class Training {
 //        }
 //    }
 
-    public void readTrainingFile() {
+public void readCrawl() {
+
+    try {
+        BufferedReader readTrainingFile = new BufferedReader(new FileReader("Crawl.txt)"));
+        String line;
+
+        while ((line = readTrainingFile.readLine()) != null) {
+
+        }
+        readTrainingFile.close();
+
+    } catch (FileNotFoundException e) {
+        System.out.println("fil ikke fundet");
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
+
+    public void readBreastStroke() {
 
         try {
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("TrainingResults.txt)"));
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("Breaststroke.txt)"));
+            String line;
+
+            while ((line = readTrainingFile.readLine()) != null) {
+
+            }
+            readTrainingFile.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("fil ikke fundet");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readBackCraw() {
+
+        try {
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("Backcrawl.txt)"));
+            String line;
+
+            while ((line = readTrainingFile.readLine()) != null) {
+
+            }
+            readTrainingFile.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("fil ikke fundet");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readButterfly() {
+
+        try {
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("Butterfly.txt)"));
             String line;
 
             while ((line = readTrainingFile.readLine()) != null) {
