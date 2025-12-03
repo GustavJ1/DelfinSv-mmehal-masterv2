@@ -2,14 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Membership {
-
+    MemberRegistry memberRegistry;
     Member member;
     private boolean yearlyRenewalStatus;
+    Membership membership;
 
     public Membership() {
 
     }
-    public double getPrice() {
+
+    public double getPrice(Member member) {
         double price = 500;
         if (member.active) {
             int age = member.getAge();
@@ -26,4 +28,8 @@ public class Membership {
 
 
 
+    @Override
+    public String toString() {
+        return " ";
+    }
 }

@@ -12,9 +12,11 @@ public class MemberRegistry {
     private int squad;
     public List<Member> arrears = new ArrayList<>();
     private boolean isArreas;
+    Membership membership;
 
 
-    public MemberRegistry() {
+    public MemberRegistry(Membership membership) {
+        this.membership=membership;
 
     }
 
@@ -83,6 +85,17 @@ public class MemberRegistry {
 
 
     }
+    public double totalrevenue() {
+
+        double revenue = 0;
+        for (Member m : members) {
+            revenue += membership.getPrice(m);
+
+
+        }
+        return revenue;
+    }
+
 
 
 }
