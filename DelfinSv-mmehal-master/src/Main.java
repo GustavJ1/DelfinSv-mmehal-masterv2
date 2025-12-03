@@ -8,6 +8,7 @@ public class Main {
         MemberRegistry memberRegistry = new MemberRegistry();
         memberRegistry.memberListFileReader();
         memberRegistry.showMembers();
+        memberRegistry.checkArreasStatus();
 
 
         //  tr.addTraining(me, LocalDate.now(), 1);
