@@ -1,15 +1,14 @@
+import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Training {
 
-    Disciplin disciplin;
     LocalDate date;
     int placement;
-    Member member;
+    private static Member member;
 
     public ArrayList<Member> competitiveMembers = new ArrayList<>();
 
@@ -17,70 +16,46 @@ public class Training {
 
     }
 
-//    public void addTraining(Member member, LocalDate date, int placement) {
-//
-//        File currentTraining = new File("TrainingResults.txt");
-//
-//        try {
-//            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(currentTraining, true));
-//
-//            writeTrainingFile.write("Dato: ");
-//            writeTrainingFile.write(String.valueOf(date));
-//            writeTrainingFile.write(", MedlemsNr: ");
-//            writeTrainingFile.write(String.valueOf(member.getMemberId()));
-//            writeTrainingFile.write(", Stilling: ");
-//            writeTrainingFile.write(String.valueOf(placement));
-//            writeTrainingFile.write("\n");
-//            writeTrainingFile.flush();
-//
-//            /*
-//            Fil indhold: Dato, id, placering
-//            Bufferedwriter
-//            Hent memberlist
-//            Random: Placement
-//            Sort: Efter placering
-//            write to file loop
-//             */
-//        writeTrainingFile.close();
-//
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void addTraining(LocalDate date) {
 
-public void readCrawl() {
-
-    try {
-        BufferedReader readTrainingFile = new BufferedReader(new FileReader("Crawl.txt)"));
-        String line;
-
-        while ((line = readTrainingFile.readLine()) != null) {
-
-        }
-        readTrainingFile.close();
-
-    } catch (FileNotFoundException e) {
-        System.out.println("fil ikke fundet");
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-}
-
-    public void readBreastStroke() {
+        File backCrawl = new File("DelfinKlub/src/Backcrawl.txt");
 
         try {
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("Breaststroke.txt)"));
-            String line;
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
 
-            while ((line = readTrainingFile.readLine()) != null) {
+            writeTrainingFile.write("Dato: ");
+            writeTrainingFile.write(String.valueOf(date));
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
 
-            }
-            readTrainingFile.close();
+            trainingInfo(writeTrainingFile);
 
-        } catch (FileNotFoundException e) {
-            System.out.println("fil ikke fundet");
+            writeTrainingFile.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void trainingInfo(BufferedWriter writeTrainingFile) throws IOException {
+
+        Scanner sc = new Scanner(System.in);
+
+        for (int i = 0; i < 5; i++) {
+
+            System.out.println("Indtast MedlemsNr: ");
+            int memberId = sc.nextInt();
+            writeTrainingFile.write(memberId + ",");
+            writeTrainingFile.flush();
+
+            System.out.println("Indtast placering");
+            int placement = sc.nextInt();
+            writeTrainingFile.write("" + placement);
+            writeTrainingFile.write("\n");
+            writeTrainingFile.write("-");
+            writeTrainingFile.flush();
+
+            sc.close();
         }
     }
 
@@ -90,6 +65,7 @@ public void readCrawl() {
             String regex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
             String regex2 = "-";
             String line;
+
             BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/Backcrawl.txt"));
 
             while ((line = readTrainingFile.readLine()) != null) {
@@ -113,18 +89,93 @@ public void readCrawl() {
             throw new RuntimeException(e);
         }
     }
-
-    public void readButterfly() {
+    public void readCrawl(String date) {
 
         try {
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("Butterfly.txt)"));
+            String regex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String regex2 = "-";
             String line;
+
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/crawl.txt"));
 
             while ((line = readTrainingFile.readLine()) != null) {
 
-            }
-            readTrainingFile.close();
+                if (line.equals(date) && date.matches(regex)) {
+                    System.out.println(line);
 
+                    while ((line = readTrainingFile.readLine()) != null) {
+                        System.out.println(line);
+
+                        if (line.equals(regex2)) {
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("fil ikke fundet");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readBreastStroke(String date) {
+
+        try {
+            String regex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String regex2 = "-";
+            String line;
+
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/BreastStroke.txt"));
+
+            while ((line = readTrainingFile.readLine()) != null) {
+
+                if (line.equals(date) && date.matches(regex)) {
+                    System.out.println(line);
+
+                    while ((line = readTrainingFile.readLine()) != null) {
+                        System.out.println(line);
+
+                        if (line.equals(regex2)) {
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("fil ikke fundet");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void readButterfly(String date) {
+
+        try {
+            String regex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String regex2 = "-";
+            String line;
+
+            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/ButterFly.txt"));
+
+            while ((line = readTrainingFile.readLine()) != null) {
+
+                if (line.equals(date) && date.matches(regex)) {
+                    System.out.println(line);
+
+                    while ((line = readTrainingFile.readLine()) != null) {
+                        System.out.println(line);
+
+                        if (line.equals(regex2)) {
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
         } catch (FileNotFoundException e) {
             System.out.println("fil ikke fundet");
         } catch (IOException e) {
