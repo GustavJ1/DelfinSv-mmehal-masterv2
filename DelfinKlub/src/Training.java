@@ -1,8 +1,7 @@
 import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Training {
 
@@ -41,19 +40,23 @@ public class Training {
 
         Scanner sc = new Scanner(System.in);
 
-        for (int i = 0; i < 5; i++) {
+        try {
 
-            System.out.println("Indtast MedlemsNr: ");
-            int memberId = sc.nextInt();
-            writeTrainingFile.write(memberId + ",");
-            writeTrainingFile.flush();
+            for (int i = 0; i < 5; i++) {
 
-            System.out.println("Indtast placering");
-            int placement = sc.nextInt();
-            writeTrainingFile.write("" + placement);
-            writeTrainingFile.write("\n");
-            writeTrainingFile.flush();
+                System.out.println("Indtast MedlemsNr: ");
+                int memberId = sc.nextInt();
+                writeTrainingFile.write(memberId + ",");
+                writeTrainingFile.flush();
 
+                System.out.println("Indtast placering");
+                int placement = sc.nextInt();
+                writeTrainingFile.write("" + placement);
+                writeTrainingFile.write("\n");
+                writeTrainingFile.flush();
+            }
+        } catch (InputMismatchException | NumberFormatException e) {
+            System.out.println("not valid");
         }
             writeTrainingFile.write("-");
             sc.close();

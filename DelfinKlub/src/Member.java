@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Period;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
@@ -68,7 +67,7 @@ public class Member {
     }
 
     public void setArrears(int iD) {
-        File arrearsFile = new File("DelfinSv-mmehal-master/src/Arrears.txt");
+        File arrearsFile = new File("DelfinKlub/src/Arrears.txt");
         try{
             BufferedWriter writeArrearsFile = new BufferedWriter(new FileWriter(arrearsFile, true));
             writeArrearsFile.write(iD+""+"\n");
@@ -85,20 +84,33 @@ public class Member {
 
     }
 
-    public void paidArrears(int iD) {
-        try {
-            List<String> lines = Files.readAllLines(Path.of("DelfinKlub/src/Arrears.txt"));
-            String idLine = Files.readAllLines(Paths.get("DelfinKlub/src/Arrears.txt")).get(iD);
+    public void paidArrears(int iD) throws IOException {
 
-            for (int i = 0; i < lines.size(); i++){
-                if (lines.get(i).equals(idLine)){
-                    lines.remove(i);
-                    i++;
-                }
+        Path fileSource = Path.of("DelfinKlub/src/temparrears.txt");
+        Path fileDestination = Path.of("DelfinKlub/src/Arrears.txt");
+
+        try {
+            List<String> lines = Files.readAllLines(fileDestination);
+
+            String idRemoval = String.valueOf(iD);
+            lines.removeIf(s -> s.equals(idRemoval));
+
+            File newFile = new File("DelfinKlub/src/temparrears.txt");
+            newFile.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter("DelfinKlub/src/temparrears.txt"));
+            for (String line : lines){
+                bw.write(line);
+                bw.newLine();
             }
+            bw.flush();
+            bw.close();
+            File oldFiles = new File("DelfinKlub/src/Arrears.txt");
+            oldFiles.delete();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+            Files.move(fileSource, fileDestination);
     }
 
     // skal bruges til at sette medlem til IKKE at være active længere og gøre pris billigere
