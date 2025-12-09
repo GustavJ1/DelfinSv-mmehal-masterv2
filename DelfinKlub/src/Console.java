@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -14,10 +15,10 @@ public class Console {
 
         while (running) {
             // Program Display
+            System.out.println("🐬~~~~~~~~~~~~~~~~~~~~🐬");
             System.out.println("VELKOMMEN til Delfin Club");
-            System.out.println("-^-^-^-^-^-^-^-^-^-^-^-^-^-");
             System.out.println("Tast 1 for [Coach]  -  Tast 2 for [Formand]  -  Tast 3 for [Kasserer]  -  Tast 0 for [Afslut Program]");
-            System.out.println("Vælg: ");
+            System.out.println("↓");
 
             int scInput = sc.nextInt();
             sc.nextLine(); // Rydder buffer
@@ -49,7 +50,6 @@ public class Console {
                             System.out.println("Indtast træningens dato (yyyy-MM-dd): ");
                             LocalDate date = LocalDate.parse(sc.next());
                             training.addBackCrawl(date);
-                            training.readBackCrawl(String.valueOf(LocalDate.parse(sc.next())));
                         }
 
                         if (disciplin == 2) {
@@ -78,20 +78,14 @@ public class Console {
 
                     // Se trænings-resultater
                     if (choice == 3) {
-                        System.out.print("""
-                                      Se træningsresultater\s
-                                      [1] - BackCrawl
-                                      [2] - Crawl
-                                      [3] - Butterfly
-                                      [4] - Breaststroke
-                                """);
+                        System.out.println("Indtast dato for pågældende trænings-resultater (yyyy-MM-dd)");
+                        System.out.println("↓");
+                        LocalDate date = LocalDate.parse(sc.next());
 
-                        int showResults = sc.nextInt();
-
-                        if (showResults == 1) {
-                            System.out.println("Indtast ønskede træning (yyyy-MM-dd): ");
-
-                        }
+                        training.readBackCrawl(String.valueOf(date));
+                        training.readCrawl(String.valueOf(date));
+                        training.readBreastStroke(String.valueOf(date));
+                        training.readButterfly(String.valueOf(date));
                     }
                     break;
 

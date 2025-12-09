@@ -7,7 +7,6 @@ public class Training {
     LocalDate date;
     int placement;
     private static Member member;
-
     public ArrayList<Member> competitiveMembers = new ArrayList<>();
 
     public Training() {
@@ -23,7 +22,6 @@ public class Training {
                 System.out.println("Indtast MedlemsNr: ");
                 int memberId = sc.nextInt();
                 writeTrainingFile.write(memberId + ",");
-
 
                 System.out.println("Indtast placering");
                 int placement = sc.nextInt();
@@ -132,11 +130,11 @@ public class Training {
                 while ((line = readTrainingFile.readLine()) != null) {
 
                     if (line.equals(date)) {
-                        System.out.println("Resulater for dato: " + date + ":");
+                        System.out.println("BACKCRAWL resultater - " + date + ":");
 
                         while ((line = readTrainingFile.readLine()) != null) {
 
-                            if (line.equals('-')) {
+                            if (line.equals("-")) {
                                 return;
                             }
                             System.out.println(line);
@@ -168,11 +166,11 @@ public class Training {
                 while ((line = readTrainingFile.readLine()) != null) {
 
                     if (line.equals(date)) {
-                        System.out.println("Resulater for dato: " + date + ":");
+                        System.out.println("CRAWL resultater - " + date + ":");
 
                         while ((line = readTrainingFile.readLine()) != null) {
 
-                            if (line.equals('-')) {
+                            if (line.equals("-")) {
                                 return;
                             }
                             System.out.println(line);
@@ -199,22 +197,22 @@ public class Training {
             }
 
             try {
-                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/BreastStroke.txt"));
+                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/Breaststroke.txt"));
 
                 while ((line = readTrainingFile.readLine()) != null) {
 
                     if (line.equals(date)) {
-                        System.out.println("Resulater for dato: " + date + ":");
+                        System.out.println("BREASTSTROKE resultater - " + date + ":");
 
                         while ((line = readTrainingFile.readLine()) != null) {
 
-                            if (line.equals('-')) {
+                            if (line.equals("-")) {
                                 return;
                             }
                             System.out.println(line);
                         }
                     }
-                } //"DelfinKlub/src/BreastStroke.txt"
+                }
             } catch (FileNotFoundException e) {
                 System.out.println("fil ikke fundet");
             }
@@ -222,7 +220,6 @@ public class Training {
             throw new RuntimeException(e);
         }
     }
-
 
     public void readButterfly(String date) {
 
@@ -241,11 +238,11 @@ public class Training {
                 while ((line = readTrainingFile.readLine()) != null) {
 
                     if (line.equals(date)) {
-                        System.out.println("Resulater for dato: " + date + ":");
+                        System.out.println("BUTTERFLY resultater - " + date + ":");
 
                         while ((line = readTrainingFile.readLine()) != null) {
 
-                            if (line.equals('-')) {
+                            if (line.equals("-")) {
                                 return;
                             }
                             System.out.println(line);
