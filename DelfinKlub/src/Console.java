@@ -53,7 +53,13 @@ public class Console {
                         int chooseFile = sc.nextInt();
                         if (chooseFile == 1) {
                             System.out.println("Vælg dato");
-                            training.readBackCrawl(sc.nextLine());
+                            String date = sc.nextLine();
+                            training.readBackCrawl(date);
+
+                        }
+                        else if (chooseFile==2){
+                            System.out.println("vælg dato");
+                            //training.readBreastStroke(sc.nextLine());
                         }
                     }
 

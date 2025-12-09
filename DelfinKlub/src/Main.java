@@ -9,14 +9,7 @@ public class Main {
         Console console = new Console();
         Member member = new Member("1010901010", "gustav", "jantzen", Gender.MAN, 1, 'k');
 
-        Training training = new Training();
-        Membership ms = new Membership();
-        MemberRegistry mr = new MemberRegistry(ms);
-        mr.memberListFileReader();
-        training.readBackCrawl("2025-12-08");
-
-
-
+       console.Program();
 
 
     }

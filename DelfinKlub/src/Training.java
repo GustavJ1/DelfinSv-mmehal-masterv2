@@ -15,91 +15,6 @@ public class Training {
 
     }
 
-    public void addBackCrawl(LocalDate date) { // BackCrawl
-
-        File backCrawl = new File("DelfinKlub/src/Backcrawl.txt");
-
-        try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
-
-            writeTrainingFile.write("Dato: ");
-            writeTrainingFile.write(String.valueOf(date));
-            writeTrainingFile.write("\n");
-            writeTrainingFile.flush();
-
-            trainingInfo(writeTrainingFile);
-
-            writeTrainingFile.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void addBreastStroke(LocalDate date) { // BreastStroke
-
-        File backCrawl = new File("DelfinKlub/src/Breaststroke.txt");
-
-        try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
-
-            writeTrainingFile.write("Dato: ");
-            writeTrainingFile.write(String.valueOf(date));
-            writeTrainingFile.write("\n");
-            writeTrainingFile.flush();
-
-            trainingInfo(writeTrainingFile);
-
-            writeTrainingFile.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void addButterfly(LocalDate date) { //Butterfly
-
-        File backCrawl = new File("DelfinKlub/src/Butterfly.txt");
-
-        try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
-
-            writeTrainingFile.write("Dato: ");
-            writeTrainingFile.write(String.valueOf(date));
-            writeTrainingFile.write("\n");
-            writeTrainingFile.flush();
-
-            trainingInfo(writeTrainingFile);
-
-            writeTrainingFile.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void addCrawl(LocalDate date) {
-
-        File backCrawl = new File("DelfinKlub/src/Crawl.txt");
-
-        try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
-
-            writeTrainingFile.write("Dato: ");
-            writeTrainingFile.write(String.valueOf(date));
-            writeTrainingFile.write("\n");
-            writeTrainingFile.flush();
-
-            trainingInfo(writeTrainingFile);
-
-            writeTrainingFile.close();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     private static void trainingInfo(BufferedWriter writeTrainingFile) throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -121,10 +36,90 @@ public class Training {
             sc.close();
     }
 
+    public void addBackCrawl(LocalDate date) { // BackCrawl
+
+        File backCrawl = new File("DelfinKlub/src/Backcrawl.txt");
+
+        try {
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+            writeTrainingFile.write(String.valueOf(date));
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
+
+            trainingInfo(writeTrainingFile);
+
+            writeTrainingFile.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addBreastStroke(LocalDate date) { // BreastStroke
+
+        File backCrawl = new File("DelfinKlub/src/Breaststroke.txt");
+
+        try {
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+
+            writeTrainingFile.write(String.valueOf(date));
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
+
+            trainingInfo(writeTrainingFile);
+
+            writeTrainingFile.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addButterfly(LocalDate date) { //Butterfly
+
+        File backCrawl = new File("DelfinKlub/src/Butterfly.txt");
+
+        try {
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+
+            writeTrainingFile.write(String.valueOf(date));
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
+
+            trainingInfo(writeTrainingFile);
+
+            writeTrainingFile.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addCrawl(LocalDate date) {
+
+        File backCrawl = new File("DelfinKlub/src/Crawl.txt");
+
+        try {
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+
+            writeTrainingFile.write(String.valueOf(date));
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
+
+            trainingInfo(writeTrainingFile);
+
+            writeTrainingFile.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void readBackCrawl(String date) {
 
         try {
-            String startRegex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
             String stopRegex = "-";
             String line;
 
@@ -154,7 +149,7 @@ public class Training {
     public void readCrawl(String date) {
 
         try {
-            String startRegex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
             String stopRegex = "-";
             String line;
 
@@ -185,7 +180,7 @@ public class Training {
     public void readBreastStroke(String date) {
 
         try {
-            String startRegex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
             String stopRegex = "-";
             String line;
 
@@ -217,7 +212,7 @@ public class Training {
     public void readButterfly(String date) {
 
         try {
-            String startRegex = "(0?[1-9]|[12][0-9]|3[01])[/|-](0?[1-9]|1[0-2])[/|-][0-9]{4}";
+            String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
             String stopRegex = "-";
             String line;
 
