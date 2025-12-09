@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -15,7 +14,7 @@ public class Training {
 
     }
 
-    private static void trainingInfo(BufferedWriter writeTrainingFile) throws IOException {
+    private void trainingInfo(BufferedWriter writeTrainingFile) throws IOException {
 
         Scanner sc = new Scanner(System.in);
 
@@ -24,16 +23,16 @@ public class Training {
                 System.out.println("Indtast MedlemsNr: ");
                 int memberId = sc.nextInt();
                 writeTrainingFile.write(memberId + ",");
-                writeTrainingFile.flush();
+
 
                 System.out.println("Indtast placering");
                 int placement = sc.nextInt();
                 writeTrainingFile.write("" + placement);
                 writeTrainingFile.write("\n");
-                writeTrainingFile.flush();
             }
             writeTrainingFile.write("-");
-            sc.close();
+            writeTrainingFile.write("\n");
+            writeTrainingFile.flush();
     }
 
     public void addBackCrawl(LocalDate date) { // BackCrawl
@@ -57,10 +56,10 @@ public class Training {
 
     public void addBreastStroke(LocalDate date) { // BreastStroke
 
-        File backCrawl = new File("DelfinKlub/src/Breaststroke.txt");
+        File breastStroke = new File("DelfinKlub/src/Breaststroke.txt");
 
         try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(breastStroke, true));
 
             writeTrainingFile.write(String.valueOf(date));
             writeTrainingFile.write("\n");
@@ -77,10 +76,10 @@ public class Training {
 
     public void addButterfly(LocalDate date) { //Butterfly
 
-        File backCrawl = new File("DelfinKlub/src/Butterfly.txt");
+        File butterfly = new File("DelfinKlub/src/Butterfly.txt");
 
         try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(butterfly, true));
 
             writeTrainingFile.write(String.valueOf(date));
             writeTrainingFile.write("\n");
@@ -97,10 +96,10 @@ public class Training {
 
     public void addCrawl(LocalDate date) {
 
-        File backCrawl = new File("DelfinKlub/src/Crawl.txt");
+        File crawl = new File("DelfinKlub/src/Crawl.txt");
 
         try {
-            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(backCrawl, true));
+            BufferedWriter writeTrainingFile = new BufferedWriter(new FileWriter(crawl, true));
 
             writeTrainingFile.write(String.valueOf(date));
             writeTrainingFile.write("\n");
@@ -120,58 +119,69 @@ public class Training {
 
         try {
             String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
-            String stopRegex = "-";
             String line;
 
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/Backcrawl.txt"));
+            if (!date.matches(startRegex)) {
+                System.out.println("Ugyldigt datoformat");
+                return;
+            }
 
-            while ((line = readTrainingFile.readLine()) != null) {
+            try {
+                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/Backcrawl.txt"));
 
-                if (line.equals(date) && date.matches(startRegex)) {
-                    System.out.println(line);
+                while ((line = readTrainingFile.readLine()) != null) {
 
-                    while ((line = readTrainingFile.readLine()) != null) {
-                        System.out.println(line);
+                    if (line.equals(date)) {
+                        System.out.println("Resulater for dato: " + date + ":");
 
-                        if (line.equals(stopRegex)) {
-                            break;
+                        while ((line = readTrainingFile.readLine()) != null) {
+
+                            if (line.equals('-')) {
+                                return;
+                            }
+                            System.out.println(line);
                         }
                     }
-                    break;
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("fil ikke fundet");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("fil ikke fundet");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void readCrawl(String date) {
 
         try {
             String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
-            String stopRegex = "-";
             String line;
 
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/crawl.txt"));
+            if (!date.matches(startRegex)) {
+                System.out.println("Ugyldigt datoformat");
+                return;
+            }
 
-            while ((line = readTrainingFile.readLine()) != null) {
+            try {
+                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/crawl.txt"));
 
-                if (line.equals(date) && date.matches(startRegex)) {
-                    System.out.println(line);
+                while ((line = readTrainingFile.readLine()) != null) {
 
-                    while ((line = readTrainingFile.readLine()) != null) {
-                        System.out.println(line);
+                    if (line.equals(date)) {
+                        System.out.println("Resulater for dato: " + date + ":");
 
-                        if (line.equals(stopRegex)) {
-                            break;
+                        while ((line = readTrainingFile.readLine()) != null) {
+
+                            if (line.equals('-')) {
+                                return;
+                            }
+                            System.out.println(line);
                         }
                     }
-                    break;
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("fil ikke fundet");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("fil ikke fundet");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -181,28 +191,33 @@ public class Training {
 
         try {
             String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
-            String stopRegex = "-";
             String line;
 
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/BreastStroke.txt"));
+            if (!date.matches(startRegex)) {
+                System.out.println("Ugyldigt datoformat");
+                return;
+            }
 
-            while ((line = readTrainingFile.readLine()) != null) {
+            try {
+                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/BreastStroke.txt"));
 
-                if (line.equals(date) && date.matches(startRegex)) {
-                    System.out.println(line);
+                while ((line = readTrainingFile.readLine()) != null) {
 
-                    while ((line = readTrainingFile.readLine()) != null) {
-                        System.out.println(line);
+                    if (line.equals(date)) {
+                        System.out.println("Resulater for dato: " + date + ":");
 
-                        if (line.equals(stopRegex)) {
-                            break;
+                        while ((line = readTrainingFile.readLine()) != null) {
+
+                            if (line.equals('-')) {
+                                return;
+                            }
+                            System.out.println(line);
                         }
                     }
-                    break;
-                }
+                } //"DelfinKlub/src/BreastStroke.txt"
+            } catch (FileNotFoundException e) {
+                System.out.println("fil ikke fundet");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("fil ikke fundet");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -213,28 +228,33 @@ public class Training {
 
         try {
             String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
-            String stopRegex = "-";
             String line;
 
-            BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/ButterFly.txt"));
+            if (!date.matches(startRegex)) {
+                System.out.println("Ugyldigt datoformat");
+                return;
+            }
 
-            while ((line = readTrainingFile.readLine()) != null) {
+            try {
+                BufferedReader readTrainingFile = new BufferedReader(new FileReader("DelfinKlub/src/ButterFly.txt"));
 
-                if (line.equals(date) && date.matches(startRegex)) {
-                    System.out.println(line);
+                while ((line = readTrainingFile.readLine()) != null) {
 
-                    while ((line = readTrainingFile.readLine()) != null) {
-                        System.out.println(line);
+                    if (line.equals(date)) {
+                        System.out.println("Resulater for dato: " + date + ":");
 
-                        if (line.equals(stopRegex)) {
-                            break;
+                        while ((line = readTrainingFile.readLine()) != null) {
+
+                            if (line.equals('-')) {
+                                return;
+                            }
+                            System.out.println(line);
                         }
                     }
-                    break;
                 }
+            } catch (FileNotFoundException e) {
+                System.out.println("fil ikke fundet");
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("fil ikke fundet");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

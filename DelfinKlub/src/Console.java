@@ -5,102 +5,128 @@ import java.util.Scanner;
 public class Console {
     Member member;
     MemberRegistry memberRegistry;
-    Training training;
+    Training training = new Training();
     Membership membership;
+
+    public void Program() {
     Scanner sc = new Scanner(System.in);
     boolean running = true;
 
-    public void Program() {
-
         while (running) {
+            // Program Display
+            System.out.println("VELKOMMEN til Delfin Club");
+            System.out.println("-^-^-^-^-^-^-^-^-^-^-^-^-^-");
+            System.out.println("Tast 1 for [Coach]  -  Tast 2 for [Formand]  -  Tast 3 for [Kasserer]  -  Tast 0 for [Afslut Program]");
+            System.out.println("Vælg: ");
 
+            int scInput = sc.nextInt();
+            sc.nextLine(); // Rydder buffer
 
-            System.out.println("Velkommen til Delfin Club");
-            System.out.println("Tast 1 for [Coach] \nTast 2 for [Formand] \nTast 3 for [Kasserer]");
-            int choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
+            switch (scInput) {
+
                 case 1:
-                    System.out.println("Tast 1 for at indskrive træningsresultater\n" +
-                            "Tast 2 for indskrive konkurrenceresultater \n" +
-                            "Tast 3 for at se træningsresultater");
 
-                    int choices = sc.nextInt();
+                    System.out.print("""
+                                        [1] - Indskrivning af træningsresultater: \s
+                                        [2] - Indskrivning af konkurrenceresultater:
+                                        [3] - Se træningsresultater:
+                                     """);
+                    int choice = sc.nextInt();
 
-                    if (choices == 1) {
-                        System.out.println("Enter date (yyyy-MM-dd)");
-                        String input = sc.nextLine();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    // tilføj trænings-resultater
+                    if (choice == 1) {
 
-                        try {
-                            LocalDate myDate = LocalDate.parse(input, formatter);
-                            training.readBackCrawl(myDate.toString());
+                        System.out.print(""" 
+                                   Disciplines \s
+                                   [1] - BackCrawl
+                                   [2] - Crawl
+                                   [3] - Butterfly
+                                   [4] - Breaststroke
+                                """);
+                        int disciplin = sc.nextInt();
 
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
+                        if (disciplin == 1) {
+                            System.out.println("Indtast træningens dato (yyyy-MM-dd): ");
+                            LocalDate date = LocalDate.parse(sc.next());
+                            training.addBackCrawl(date);
+                            training.readBackCrawl(String.valueOf(LocalDate.parse(sc.next())));
                         }
 
-                    } else if (choices == 2) {
-
-                    } else if (choices == 3) {
-                        System.out.println("""
-                                Hvad vil du se resultater for?\s
-                                [1] Backcrawl
-                                [2] Breaststroke
-                                [3] Butterfly
-                                [4] Crawl""");
-
-                        int chooseFile = sc.nextInt();
-                        if (chooseFile == 1) {
-                            System.out.println("Vælg dato");
-                            String date = sc.nextLine();
-                            training.readBackCrawl(date);
-
+                        if (disciplin == 2) {
+                            System.out.println("Indtast træningens dato (yyyy-MM-dd): ");
+                            LocalDate date = LocalDate.parse(sc.next());
+                            training.addCrawl(date);
                         }
-                        else if (chooseFile==2){
-                            System.out.println("vælg dato");
-                            //training.readBreastStroke(sc.nextLine());
+
+                        if (disciplin == 3) {
+                            System.out.println("Indtast træningens dato (yyyy-MM-dd): ");
+                            LocalDate date = LocalDate.parse(sc.next());
+                            training.addButterfly(date);
+                        }
+
+                        if (disciplin == 4) {
+                            System.out.println("Indtast træningens dato (yyyy-MM-dd): ");
+                            LocalDate date = LocalDate.parse(sc.next());
+                            training.addBreastStroke(date);
                         }
                     }
 
+                    // Indskriv konkurrence-resultater
+                    if (choice == 2) {
+                        System.out.print("Konkurrence Resultater");
+                    }
+
+                    // Se trænings-resultater
+                    if (choice == 3) {
+                        System.out.print("""
+                                      Se træningsresultater\s
+                                      [1] - BackCrawl
+                                      [2] - Crawl
+                                      [3] - Butterfly
+                                      [4] - Breaststroke
+                                """);
+
+                        int showResults = sc.nextInt();
+
+                        if (showResults == 1) {
+                            System.out.println("Indtast ønskede træning (yyyy-MM-dd): ");
+
+                        }
+                    }
                     break;
 
-                case 2:
-
-
-                    break;
                 case 0:
                     System.out.println("programmet afsluttet");
                     running = false;
+                    sc.close();
                     break;
+
                 default:
                     System.out.println("ugyldigt valg");
                     break;
             }
-
-
         }
     }
 }
-/*                 */
 
-/* Scanner start menu - "velkommen til Delfin Club
-Coach / Formand / Kasserer
-Coach {
+
+/*
+Coach
 tast 1 opret training
 tast 2 opret competition
 tast 3 print trainingResults (skal man have noget funktionalitet i forhold til udtagelse til competition?)
 tast 4 print competitionResults
-}
-Formand {
+
+Formand
 tast 1 opret medlem
 Tast 2 fjern medlem
 Tast 3 liste af medlemmer
-}
-Kasserer {
+
+Kasserer
 Tast 1 se totalRevenue (periode)
 tast 2 se medlemmer i restance
 tast 3 se specifik medlem kontingent
-
-}
 */
+
+
+

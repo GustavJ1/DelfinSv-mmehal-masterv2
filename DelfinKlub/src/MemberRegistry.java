@@ -16,8 +16,7 @@ public class MemberRegistry {
 
 
     public MemberRegistry(Membership membership) {
-        this.membership=membership;
-
+        this.membership = membership;
     }
 
     public void showMembers() {
@@ -60,13 +59,13 @@ public class MemberRegistry {
 
                 Member member = new Member(cpr, firstName, lastName, gender, memberId, competitionSwimmer);
                 members.add(member);
-
             }
             memberListReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public void removeMember(int id) {
         Path fileSource = Path.of("DelfinKlub/src/tempmembers.txt");
         Path fileDestination = Path.of("DelfinKlub/src/MemberList.txt");
