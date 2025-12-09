@@ -17,7 +17,6 @@ public class MemberRegistry {
 
     public MemberRegistry(Membership membership) {
         this.membership = membership;
-
     }
 
     public void showMembers() {
@@ -60,7 +59,6 @@ public class MemberRegistry {
 
                 Member member = new Member(cpr, firstName, lastName, gender, memberId, competitionSwimmer);
                 members.add(member);
-
             }
             memberListReader.close();
         } catch (IOException e) {

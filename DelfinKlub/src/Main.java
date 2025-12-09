@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Membership membership = new Membership();
+
         Console console = new Console();
-        MemberRegistry m=new MemberRegistry(membership);
-        m.memberListFileReader();
-        System.out.println(".......");
-        System.out.println(m.totalrevenue());
+
+        console.Program();
+
+
     }
 
 }
