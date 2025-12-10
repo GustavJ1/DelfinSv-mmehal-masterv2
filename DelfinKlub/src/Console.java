@@ -7,15 +7,16 @@ public class Console {
 
 
     Member member;
-    MemberRegistry memberRegistry;
-    Training training = new Training();
     Membership membership = new Membership();
+    MemberRegistry mr= new MemberRegistry(membership);
+    Training training = new Training();
+
 
 
     public void Program() {
     Scanner sc = new Scanner(System.in);
     boolean running = true;
-    MemberRegistry mr = new MemberRegistry(membership);
+        mr.memberListFileReader();
 
         while (running) {
             // Program Display

@@ -18,13 +18,13 @@ public class Member {
     MemberRegistry memberRegistry;
     public boolean inArrears;
 
-    public Member(String cpr, String firstName, String lastName, Gender gender, int memberId, char competitionSwimmer) {
+    public Member(String cpr, String firstName, String lastName, Gender gender, int memberId, char competitionSwimmer, boolean active) {
         this.cpr = cpr;
         this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
         this.competitionSwimmer = competitionSwimmer;
-        this.active = true;
+        this.active = active;
         this.memberId=memberId;
     }
 
@@ -32,6 +32,9 @@ public class Member {
         if (this.competitionSwimmer == 'T' ){
             return "T";
         } else return "K";
+    }
+    public boolean getActive(){
+        return this.active;
     }
 
     public String stringFromGender() {

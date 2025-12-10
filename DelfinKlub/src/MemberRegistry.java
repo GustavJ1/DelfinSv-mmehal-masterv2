@@ -52,12 +52,12 @@ public class MemberRegistry {
                 String lastName = parts[2];
                 Gender gender = Gender.valueOf(parts[3]);
                 char competitionSwimmer = (parts[4].charAt(0));
-
+                boolean active = Boolean.parseBoolean((parts[5]));
 
                 int memberId = id;
                 id++;
 
-                Member member = new Member(cpr, firstName, lastName, gender, memberId, competitionSwimmer);
+                Member member = new Member(cpr, firstName, lastName, gender, memberId, competitionSwimmer, active);
                 members.add(member);
             }
             memberListReader.close();
@@ -103,8 +103,8 @@ public class MemberRegistry {
     }
 
     // skal bruges til at sette medlem til IKKE at være active længere og gøre pris billigere
-    public void setActive(){
-        member.active=false;
+    public void setActive() {
+        member.active = false;
     }
 
     public void checkArrearsStatus() {
@@ -148,7 +148,7 @@ public class MemberRegistry {
 
         return "___________________________________________\n"
                 + "Total omsætning = " + revenue + " kr,-\n" +
-                "Antal medlemmer: " + getAmountOfMembers() +"\n"+
+                "Antal medlemmer: " + getAmountOfMembers() + "\n" +
                 "___________________________________________\n";
     }
 }
