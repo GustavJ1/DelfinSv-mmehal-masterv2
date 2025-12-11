@@ -23,10 +23,4 @@ public class Membership {
     }
 
 
-
-
-    @Override // ligegyldig toString?
-    public String toString() {
-        return " ";
-    }
 }

@@ -6,12 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberRegistry {
-    Member member;
     public ArrayList<Member> members = new ArrayList<>();
-    private boolean yearlyRenewalStatus;
-    private int squad;
     public List<Member> arrears = new ArrayList<>();
-    private boolean isArreas;
     Membership membership;
 
 
@@ -26,15 +22,6 @@ public class MemberRegistry {
         }
     }
 
-    public int assignSquadByCpr() {
-        if (member.getAge() < 18) return 1;
-        if (member.getAge() > 60) return 5;
-        return 3;
-    }
-
-    public boolean isCompetitionSwimmer() {
-        return member.competitionSwimmer() == 'K';
-    }
 
     public void memberListFileReader() {
         members.clear();
@@ -67,41 +54,21 @@ public class MemberRegistry {
     }
 
     public void addMember(Member member) {
-        memberListFileReader();
-        Path fileSource = Path.of("DelfinKlub/src/tempmembers.txt");
-        Path fileDestination = Path.of("DelfinKlub/src/MemberList.txt");
 
         Member m = (member);
-        m.paidArrears(m.getMemberId());
 
         String memberLine =
                 m.getCpr() + "," + m.getFirstName() + "," + m.getLastName() + "," + m.stringFromGender() + "," + m.getCompSwimmerString() + "," + m.isActive();
 
         try {
-
-            List<String> lines = Files.readAllLines(fileDestination);
-
-
-            if (!lines.contains(memberLine)) {
-                lines.add(memberLine);
-            }
-
-
-            File newFile = new File("DelfinKlub/src/tempmembers.txt");
-            newFile.createNewFile();
-            BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
-            for (String line : lines) {
-                bw.write(line);
-                bw.newLine();
-            }
+            BufferedWriter bw = new BufferedWriter(new FileWriter("DelfinKlub/src/MemberList.txt", true));
+            bw.write(memberLine);
             bw.flush();
             bw.close();
 
-
-            Files.move(fileSource, fileDestination, StandardCopyOption.REPLACE_EXISTING);
-
         } catch (IOException e) {
             e.printStackTrace();
+            memberListFileReader();
         }
     }
 
@@ -142,11 +109,7 @@ public class MemberRegistry {
         return members.get(Id);
     }
 
-    // skal bruges til at sette medlem til IKKE at være active længere og gøre pris billigere
-    public void setActive() {
-        member.active = false;
-    }
-
+    // tjekker for arreas txt filen og giver output tilbage med folk der " mangler betaling"
     public void checkArrearsStatus() {
         for (Member m : members) {
             m.setInArrears(false);
@@ -179,6 +142,7 @@ public class MemberRegistry {
         }
     }
 
+    // printer total omsætning samt antal medlemmer
     public String totalrevenue() {
 
         double revenue = 0;
