@@ -1,3 +1,5 @@
+import com.sun.jdi.Value;
+
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Scanner;
@@ -5,8 +7,9 @@ import java.util.Scanner;
 public class Console {
     Member member;
     Membership membership = new Membership();
-    MemberRegistry mr= new MemberRegistry(membership);
+    MemberRegistry mr = new MemberRegistry(membership);
     Event event = new Event();
+    Member m = new Member("1010001010", "Medlem", "Medlemsen", Gender.MAN, 0, 'k', true);
 
     public void program() {
         Scanner sc = new Scanner(System.in);
@@ -27,11 +30,11 @@ public class Console {
 
                 case 1:
                     System.out.print("""
-                                        [1] - Indskrivning af trænings-resultater: \s
-                                        [2] - Indskrivning af tidligere trænings-resultater:
-                                        [3] - Indskrivning af konkurrenceresultater:
-                                        [4] - Se træningsresultater:
-                                     """);
+                               [1] - Indskrivning af trænings-resultater: \s
+                               [2] - Indskrivning af tidligere trænings-resultater:
+                               [3] - Indskrivning af konkurrenceresultater:
+                               [4] - Se træningsresultater:
+                            """);
                     int choice = sc.nextInt();
 
                     // tilføj trænings-resultater
@@ -65,7 +68,7 @@ public class Console {
                         System.out.println("↓");
                         LocalDate date = LocalDate.parse(sc.next());
 
-                        event.readEvent(String.valueOf(date),"DelfinKlub/src/Training.txt");
+                        event.readEvent(String.valueOf(date), "DelfinKlub/src/Training.txt");
                     }
 
                     break;
@@ -74,33 +77,41 @@ public class Console {
 
                     System.out.println("""
                             hvad vil du gøre nu?\s
-                            [1] tilføje medlem
-                            [2] fjerne medlem
-                            [3] se alle medlemmer""");
+                            [1] Tilføje medlem
+                            [2] Fjerne medlem
+                            [3] Se alle medlemmer
+                            """);
 
-                    choice = sc.nextInt();
-                    if (choice == 1) {
-                        System.out.println("det virker");
-                        //skal lave metode til addmember()?
-                    } else if (choice == 2) {
-                        System.out.println("vælg medlemsID du vil fjerne");
-                        int removeMember = sc.nextInt();
-                        mr.removeMember(removeMember);
+                    int subChoice = sc.nextInt();
+                    sc.nextLine();
 
-                    } else if (choice == 3) {
+                    switch (subChoice) {
+                        case 1 -> addMemberUI();
+                        case 2 -> { //fjerner medlem
+                            System.out.println("Indtast medlemID du vil fjerne");
+                            int removeMember = sc.nextInt();
+                            sc.nextLine();
+                            mr.removeMember(removeMember);
+                            System.out.println("Medlem er blevet fjernet.");
 
-                        mr.memberListFileReader();
-                        mr.showMembers(); //virker, viser medlemmer skal også være en tom linje inden break
-                        sc.nextLine();
+                        }
+                        case 3  -> {
+                            //viser medlemmem
 
+                            mr.memberListFileReader();
+                            mr.showMembers();
+                            System.out.println();
+                        }
+                        default -> System.out.println("Ugyldigt valg. Vælg 1,2 eller 3.");
                     }
                     break;
+
                 case 3: // Kasserers tool (økonomi)
                     System.out.println("""
                             Du kan nu vælge følgende \s
                                  [1] Se Total Revenue
                                  [2] Se Medlemmer i Restance
-                                 [3] Se specifik medlem kontigent""");
+                                 [3] Opdater restance""");
                     int revchoice = sc.nextInt();
                     if (revchoice == 1) {
                         System.out.println(mr.totalrevenue());
@@ -108,9 +119,20 @@ public class Console {
 
                     } else if (revchoice == 2) {
                         mr.checkArrearsStatus();
-                    }
-                    else if (revchoice==3){
-                        mr.setActive();
+                    } else if (revchoice == 3) {
+
+                        System.out.println("[1] Tilføj medlem til restance\n" +
+                                "[2] fjern medlem fra restance");
+                        int Cchoice = sc.nextInt();
+                        if (Cchoice == 1) {
+                            System.out.println("Vælg medlemsID");
+                            m.setArrears(sc.nextInt());
+                            System.out.println("restance er nu Tilføjet");
+                        } else if (Cchoice == 2) {
+                            System.out.println("Vælg medlemsID");
+                            m.paidArrears(sc.nextInt());
+                            System.out.println("restance er nu Fjernet");
+                        }
                     }
                     break;
                 case 0:
@@ -124,6 +146,37 @@ public class Console {
                     break;
             }
         }
+    }
+
+    public void addMemberUI() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Indtast CPR (ddMMyyxxxx);");
+        String cpr = sc.nextLine();
+
+        System.out.println("Indtast fornavn:");
+        String firstName = sc.nextLine();
+
+        System.out.println("Indtast efternavn:");
+        String lastName = sc.nextLine();
+
+        System.out.println("Indtast køn MAN/WOMAN):");
+        Gender gender = Gender.valueOf(sc.nextLine().toUpperCase());
+
+        System.out.println(" Er medlem Konkurrencesvømmer? (K/T)");
+        char competitionSwimmer = sc.nextLine().toUpperCase().charAt(0);
+        boolean active = true;
+
+        int memberId = mr.getAmountOfMembers() + 1;
+
+        Member newMember = new Member(cpr, firstName, lastName, gender, memberId, competitionSwimmer, active);
+
+        mr.members.add(newMember);
+
+        mr.addMember(newMember);
+
+        System.out.println("Medlemmet er tilføjet: " + newMember);
+
     }
 }
 

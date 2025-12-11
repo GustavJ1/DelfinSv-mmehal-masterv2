@@ -15,7 +15,6 @@ public class MemberRegistry {
     Membership membership;
 
 
-
     public MemberRegistry(Membership membership) {
         this.membership = membership;
     }
@@ -67,45 +66,44 @@ public class MemberRegistry {
         }
     }
 
-        public void addMember(Member member) {
+    public void addMember(Member member) {
         memberListFileReader();
-            Path fileSource = Path.of("DelfinKlub/src/tempmembers.txt");
-            Path fileDestination = Path.of("DelfinKlub/src/MemberList.txt");
+        Path fileSource = Path.of("DelfinKlub/src/tempmembers.txt");
+        Path fileDestination = Path.of("DelfinKlub/src/MemberList.txt");
 
-            Member m =(member);
-            m.paidArrears(m.getMemberId());
+        Member m = (member);
+        m.paidArrears(m.getMemberId());
 
-            String memberLine = m.getCpr() + "," + m.getFirstName() + "," + m.getLastName() + "," + m.stringFromGender() + "," + m.getCompSwimmerString();
+        String memberLine =
+                m.getCpr() + "," + m.getFirstName() + "," + m.getLastName() + "," + m.stringFromGender() + "," + m.getCompSwimmerString() + "," + m.isActive();
 
-            try {
+        try {
 
-                List<String> lines = Files.readAllLines(fileDestination);
-
-
-                if (!lines.contains(memberLine)) {
-                    lines.add(memberLine);
-                }
+            List<String> lines = Files.readAllLines(fileDestination);
 
 
-                File newFile = new File("DelfinKlub/src/tempmembers.txt");
-                newFile.createNewFile();
-                BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
-                for (String line : lines) {
-                    bw.write(line);
-                    bw.newLine();
-                }
-                bw.flush();
-                bw.close();
-
-
-                Files.move(fileSource, fileDestination, StandardCopyOption.REPLACE_EXISTING);
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!lines.contains(memberLine)) {
+                lines.add(memberLine);
             }
+
+
+            File newFile = new File("DelfinKlub/src/tempmembers.txt");
+            newFile.createNewFile();
+            BufferedWriter bw = new BufferedWriter(new FileWriter(newFile));
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+            bw.flush();
+            bw.close();
+
+
+            Files.move(fileSource, fileDestination, StandardCopyOption.REPLACE_EXISTING);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
+    }
 
 
     public void removeMember(int id) {

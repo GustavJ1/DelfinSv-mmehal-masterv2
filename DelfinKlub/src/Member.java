@@ -27,6 +27,9 @@ public class Member {
         this.active = active;
         this.memberId=memberId;
     }
+    public boolean isActive(){
+        return active;
+    }
 
     public String getCompSwimmerString(){
         if (this.competitionSwimmer == 'T' ){
