@@ -1,6 +1,9 @@
 import com.sun.jdi.Value;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -38,22 +41,28 @@ public class Console {
 
                     // tilføj trænings-resultater
                     if (choice == 1) {
-                        System.out.println("Disciplin (TAG HØJDE FOR CAPS");
-                        Disciplin disciplin = Disciplin.valueOf(sc.next());
+                        System.out.println("Disciplin");
+                        Disciplin disciplin = Disciplin.valueOf(sc.next().toUpperCase(Locale.ROOT));
                         event.eventDate(disciplin, "DelfinKlub/src/Training.txt");
                         System.out.println("Træningen er hermed tilføjet");
                     }
 
                     if (choice == 2) {
-                        System.out.println("Disciplin (TAG HØJDE FOR CAPS");
-                        Disciplin disciplin = Disciplin.valueOf(sc.next());
+                        try {
+                            System.out.println("Disciplin");
 
-                        System.out.println("Indtast dato for pågældende trænings-resultater (yyyy-MM-dd)");
-                        System.out.println("↓");
+                            Disciplin disciplin = Disciplin.valueOf(sc.next().toUpperCase(Locale.ROOT));
 
-                        LocalDate date = LocalDate.parse(sc.next());
-                        event.manuallyEnterEventDate(date, disciplin, "DelfinKlub/src/Training.txt");
-                        System.out.println("Træningen fra en tidligere dato er hermed tilføjet");
+
+                            System.out.println("Indtast dato for pågældende trænings-resultater (yyyy-MM-dd)");
+                            System.out.println("↓");
+
+                            LocalDate date = LocalDate.parse(sc.next());
+                            event.manuallyEnterEventDate(date, disciplin, "DelfinKlub/src/Training.txt");
+                            System.out.println("Træningen fra en tidligere dato er hermed tilføjet");
+                        } catch (DateTimeException e) {
+                            System.out.println("Ugyldig dato. vælg dato i denne Format (yyyy-MM-dd");
+                        }
                     }
 
                     // Indskriv konkurrence-resultater
@@ -94,7 +103,7 @@ public class Console {
                             System.out.println("Medlem er blevet fjernet.");
 
                         }
-                        case 3  -> {
+                        case 3 -> {
                             //viser medlemmem
 
                             mr.memberListFileReader();
@@ -121,7 +130,7 @@ public class Console {
                     } else if (revchoice == 3) {
 
                         System.out.println("[1] Tilføj medlem til restance\n" +
-                                           "[2] fjern medlem fra restance");
+                                "[2] fjern medlem fra restance");
                         int Cchoice = sc.nextInt();
                         if (Cchoice == 1) {
                             System.out.println("Vælg medlemsID");
@@ -134,6 +143,8 @@ public class Console {
                         }
                     }
                     break;
+
+
                 case 0:
                     System.out.println("programmet afsluttet");
                     running = false;
