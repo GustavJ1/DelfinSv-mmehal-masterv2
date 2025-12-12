@@ -47,6 +47,7 @@ public class Event {
     }
 
     public void eventDate(Disciplin disciplin, String pathname) {
+
         File filePath = new File(pathname);
 
         try {
@@ -66,6 +67,7 @@ public class Event {
     }
 
     public void manuallyEnterEventDate(LocalDate date, Disciplin disciplin, String pathname) {
+
         File filePath = new File(pathname);
 
         try {
@@ -84,15 +86,14 @@ public class Event {
         }
     }
 
-    public void readEvent(String date, String filePath) {
+    public void readEvent(String date, String filePath)  {
 
         try {
             String startRegex = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
             String line;
 
             if (!date.matches(startRegex)) {
-                System.out.println("Ugyldigt datoformat");
-                return;
+                System.out.println("Fokert dato format (yyyy-MM-dd)");
             }
 
             try {

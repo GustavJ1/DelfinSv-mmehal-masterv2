@@ -1,6 +1,7 @@
 import java.io.File;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -9,7 +10,6 @@ public class Console {
     Membership membership = new Membership();
     MemberRegistry mr = new MemberRegistry(membership);
     Event event = new Event();
-
 
     public void program() {
         Scanner sc = new Scanner(System.in);
@@ -24,7 +24,7 @@ public class Console {
             System.out.println("↓");
 
             int scInput = sc.nextInt();
-            sc.nextLine(); // Rydder buffer
+            sc.nextLine();
 
             switch (scInput) {
 
@@ -38,7 +38,7 @@ public class Console {
                             """);
                     int choice = sc.nextInt();
 
-                    // tilføj trænings-resultater
+                    // Tilføj trænings-resultater
                     try {
                         if (choice == 1) {
                             System.out.println("Vælg mellem [Crawl, Backcrawl, Breaststroke, Butterfly]");
@@ -52,6 +52,7 @@ public class Console {
                         continue;
                     }
 
+                    // Tilføjelse af træning fra en ældre dato
                     if (choice == 2) {
                         try {
                             System.out.println("Vælg mellem [Crawl, Backcrawl, Breaststroke, Butterfly]");
@@ -77,11 +78,16 @@ public class Console {
 
                     // Se trænings-resultater
                     if (choice == 4) {
-                        System.out.println("Indtast dato for pågældende trænings-resultater (yyyy-MM-dd)");
-                        System.out.println("↓");
-                        LocalDate date = LocalDate.parse(sc.next());
+                        try {
+                            System.out.println("Indtast dato for pågældende trænings-resultater (yyyy-MM-dd)");
+                            System.out.println("↓");
+                            LocalDate date = LocalDate.parse(sc.next());
 
-                        event.readEvent(String.valueOf(date), "DelfinKlub/src/Training.txt");
+                            event.readEvent(String.valueOf(date), "DelfinKlub/src/Training.txt");
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Fokert dato format (yyyy-MM-dd)");
+                        }
+
                     }
 
                     // Se konkurrence-resultater
@@ -146,6 +152,7 @@ public class Console {
 
                     } else if (revchoice == 2) {
                         mr.checkArrearsStatus();
+
                     } else if (revchoice == 3) {
 
                         System.out.println("[1] Tilføj medlem til restance\n" +
@@ -162,7 +169,6 @@ public class Console {
                         }
                     }
                     break;
-
 
                 case 0:
                     System.out.println("programmet afsluttet");
@@ -206,7 +212,6 @@ public class Console {
 
     }
 }
-
 
 
 /*

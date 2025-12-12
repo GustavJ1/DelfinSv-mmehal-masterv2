@@ -18,6 +18,4 @@ public class Membership {
         }
         return price;
     }
-
-
 }

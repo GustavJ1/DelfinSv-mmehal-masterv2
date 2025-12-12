@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.*;
 import java.lang.*;
 
-
 public class Competition {
     Membership ms = new Membership();
     MemberRegistry memberRegistry = new MemberRegistry(ms);
@@ -14,7 +13,6 @@ public class Competition {
 
     private LocalTime raceTime;
     private int memberId;
-
 
     public Competition(int memberId, LocalTime raceTime) {
         this.raceTime = raceTime;
@@ -29,6 +27,7 @@ public class Competition {
     }
 
     public void addCompetitionMembers() {
+
         seniorCompetitionMembers.clear();
         juniorCompetitionMembers.clear();
         memberRegistry.memberListFileReader();
@@ -47,6 +46,7 @@ public class Competition {
     }
 
     public void writeCompFile() {
+
         memberRegistry.memberListFileReader();
         addCompetitionMembers();
         Scanner sc = new Scanner(System.in);
@@ -63,15 +63,13 @@ public class Competition {
             // Indsæt metode der kalder junior eller senior (Printer overskriften)
             System.out.println("Vil du skrive for Junior eller Senior medlemmer?");
             String input = sc.next();
+
             if (Objects.equals(input.toLowerCase(), "senior")) {
                 seniorFileWriter(writeCompetitionFile);
             } else if (Objects.equals(input.toLowerCase(), "junior")) {
                 juniorFileWriter(writeCompetitionFile);
             }
             writeCompetitionFile.flush();
-
-            // Sortering af resultater ud fra racetime
-
             writeCompetitionFile.close();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -136,6 +134,7 @@ public class Competition {
     }
 
     public void juniorFileWriter(BufferedWriter writer) throws IOException {
+
         writer.write("JUNIOR" + "\n");
 
         Scanner sc = new Scanner(System.in);
@@ -193,10 +192,10 @@ public class Competition {
             writer.write("\n");
             writer.flush();
         }
-
     }
 
     public void readCompetitionFile(String date, String disciplin, String ageGroup, File filePath) {
+
         List<Competition> compList = new ArrayList<>();
         memberRegistry.memberListFileReader();
         boolean dateBlock = false;
@@ -263,7 +262,6 @@ public class Competition {
                     }
 
                 }
-
             } catch (FileNotFoundException e) {
                 System.out.println("fil ikke fundet");
             }
@@ -277,21 +275,3 @@ public class Competition {
         return memberId + ": " + raceTime;
     }
 }
-
-
-
-/*
-Sorterer mellem junior og senior
-Skrive 20 medlemmer med tid og placering inden for en dato, med 5 i hver disciplin (Junior)
-Skrive 20 medlemmer med tid og placering inden for en dato, med 5 i hver disciplin (Senior)
-Automatisk sorterer og placerer deltagerne efter tid
-
-*/
-
-/*This is a simple four step process, with three of the four steps addressed by Stackoverflow Questions:
-Read each line and turn them into Java String
-Store each Java String in a Array (don't think you need a reference for this one.)
-Sort your Array
-Write out each Java String in your array
-
- */
